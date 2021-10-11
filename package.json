@@ -1,0 +1,21 @@
+{
+  "name": "iskaribot",
+  "version": "1.0.0",
+  "description": "The Iskaribot is a message-relaying bot for cross-posting messages between platforms.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "facebook",
+    "workplace",
+    "slack"
+  ],
+  "author": "Thomas Qvidahl",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
