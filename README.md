@@ -11,9 +11,11 @@ You then need to repeat the similar procedure on the Slack-side, so you get a Sl
 
 ## Development
 
-Iskaribot was built using Node 16.1.0 and NPM 7.24.0 so you should be safe if you have the same versions.
+Iskaribot was built using Node 16.1.0 and NPM 7.24.0 so you should be safe if you have the same versions, others at your peril. Not really.
 
 You will also need Git if you want to clone this repository.
+
+Then you will need a public TLS-enabled endpoint for you localhost process, so why don't you give [ngrok](https://ngrok.com/) a try?
 
 1. Clone this repository.
 2. Install dependencies by running `npm install`
@@ -23,3 +25,14 @@ You will also need Git if you want to clone this repository.
 ## Deployment
 
 TODO: Dockerfile to build container image for deployment.
+
+## API documentation
+
+### Facebook API
+
+- [Getting Started](https://developers.facebook.com/docs/graph-api/webhooks/getting-started)
+- [Permissions](https://developers.facebook.com/docs/workplace/reference/permissions)
+
+### Slack API
+
+- [Incoming webhooks for Slack](https://slack.com/intl/en-no/help/articles/115005265063-Incoming-webhooks-for-Slack)
