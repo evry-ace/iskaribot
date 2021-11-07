@@ -5,6 +5,8 @@ require('dotenv').config();
 
 var app = express();
 app.set('port', process.env.PORT || 9000);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 /* Config values can be set as environment variables
  * APP_SECRET - App dashboard
@@ -22,7 +24,7 @@ if (!(APP_SECRET && VERIFY_TOKEN && ACCESS_TOKEN)) {
   process.exit(1);
 }
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   if (req.query['hub.mode'] === 'subscribe' &&
     req.query['hub.verify_token'] === VERIFY_TOKEN) {
     console.log('Validating webhook');
@@ -33,10 +35,11 @@ app.get('/', function (req, res) {
   }
 });
 
-app.post('/', function (req, res) {
+app.post('/', (req, res) => {
+
   try {
     var data = req.body;
-    console.log(data);
+    //console.log(data)
     switch (data.object) {
       case 'page':
         processPageEvents(data);
