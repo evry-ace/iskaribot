@@ -1,5 +1,6 @@
 const
-  express = require('express');
+  express = require('express')
+  axios = require('axios');
 
 require('dotenv').config();
 
@@ -17,7 +18,8 @@ app.use(express.json());
 const
   APP_SECRET = process.env.APP_SECRET,
   VERIFY_TOKEN = process.env.VERIFY_TOKEN,
-  ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+  ACCESS_TOKEN = process.env.ACCESS_TOKEN,
+  SLACK_URL = process.env.SLACK_URL;
 
 if (!(APP_SECRET && VERIFY_TOKEN && ACCESS_TOKEN)) {
   console.error('Missing configuration values');
@@ -83,8 +85,27 @@ function processPageEvents(data) {
 function processGroupEvents(data) {
   data.entry.forEach(function (entry) {
     let group_id = entry.id;
+    let wp_post = "";
     entry.changes.forEach(function (change) {
-      console.log('Group change', group_id, change);
+      console.log('Group change', group_id, change, change.value.permalink_url);
+    
+      wp_post += `${change.value.from.name} posted: ${change.value.message}\n\n${change.value.permalink_url}`;
+    });
+    
+    axios({
+      method: "post",
+      url: SLACK_URL,
+      data: {
+        "text": wp_post,
+      }
+    })
+    .then((response) => {
+        const html = response.data;
+        console.log(wp_post);
+        //console.log(permalink_url);
+    })
+    .catch(function (error) {
+        //console.log(error);
     });
   });
 }
