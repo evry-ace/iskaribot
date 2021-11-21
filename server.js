@@ -1,6 +1,6 @@
 const
   express = require('express')
-  axios = require('axios');
+axios = require('axios');
 
 require('dotenv').config();
 
@@ -47,6 +47,7 @@ app.post('/', (req, res) => {
         processPageEvents(data);
         break;
       case 'group':
+        res.sendStatus(200);
         processGroupEvents(data);
         break;
       case 'user':
@@ -88,10 +89,9 @@ function processGroupEvents(data) {
     let wp_post = "";
     entry.changes.forEach(function (change) {
       console.log('Group change', group_id, change, change.value.permalink_url);
-    
       wp_post += `${change.value.from.name} posted: ${change.value.message}\n\n${change.value.permalink_url}`;
     });
-    
+
     axios({
       method: "post",
       url: SLACK_URL,
@@ -99,14 +99,14 @@ function processGroupEvents(data) {
         "text": wp_post,
       }
     })
-    .then((response) => {
+      .then((response) => {
         const html = response.data;
         console.log(wp_post);
         //console.log(permalink_url);
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
         //console.log(error);
-    });
+      });
   });
 }
 
