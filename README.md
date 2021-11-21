@@ -49,6 +49,9 @@ Using 'Integrations' in Workplace, you can configure a webhook to trigger Iskari
 - Verify token set to the same value as in your local `.env` file.
 - Tick 'posts' to enable the webhook to be 'triggered when a post is added, updated or deleted in a group'.
 
+### Configure Slack
+In Slack, configure a webhook. Add the webhook url to an environment variable ´SLACK_URL´.
+This URL will be used to post 
 ## Deployment
 
 TODO: Dockerfile to build container image for deployment.
