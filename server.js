@@ -47,6 +47,7 @@ app.post('/', (req, res) => {
         processPageEvents(data);
         break;
       case 'group':
+        //Quick and dirty fix for repeating messages
         res.sendStatus(200);
         processGroupEvents(data);
         break;
