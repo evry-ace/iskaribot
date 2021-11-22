@@ -21,7 +21,6 @@ Then you will need a public TLS-enabled endpoint for your localhost process, so 
 
 1. Clone this repository.
 1. Install dependencies by running `npm install`
-1. Install `nodemon` globally with `npm i -g nodemon`
 1. Add configuration data to the included `rename.env` file and rename the file to `.env`. Optionally, and for production deployment, the configuration can be added as environment variables.
 1. Run the bot with `npm start` which will run nodemon and listen for changes to the application...
 
