@@ -6,9 +6,9 @@ This bot solves the age-old conundrum of how to get developers to read corporate
 
 There are three implementations of the same functionality;
 
-- Node.js [/node]("node/README.md")
-- .NET Core [/dotnet]("dotnet/README.md")
-- Golang [/go]("go/README.md")
+- Node.js [/node](node/README.md)
+- .NET Core [/dotnet](dotnet/README.md)
+- Golang [/go](go/README.md)
 
 Each platform will have the same functionality:
 
@@ -55,9 +55,9 @@ You will need to repeat the process in you Slack tenant; cosy up to the admins, 
 
 Refer to the instructions for your chosen platform:
 
-- Node.js [/node]("node/README.md")
-- .NET Core [/dotnet]("dotnet/README.md")
-- Golang [/go]("go/README.md")
+- Node.js [/node](node/README.md)
+- .NET Core [/dotnet](dotnet/README.md)
+- Golang [/go](go/README.md)
 
 ### 2. Configuring ngrok
 
