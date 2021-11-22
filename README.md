@@ -33,6 +33,8 @@ Future/planned functionality:
 
 These are the prerequisites common for each platform version.
 
+First of all you need to clone this repository using git, or by downloading the .ZIP file.
+
 #### 1. Workplace by Facebook
 
 You need an account in a corporate Facebook Workplace tenant, so if you are not the system administrator (likely not) you will need to cosy up to someone who is, and have them help you out with the proper permissions to read data from Workplace and to register the webhook.
