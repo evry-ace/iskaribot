@@ -1,31 +1,65 @@
 # Iskaribot
 
-Iskaribot is a Facebook Workplace -> Slack message cross-poster, which registers for webhooks and listes for posts to a particular Workplace group. When receiving such a webhook, it will resend the post to a configured Slack-channel (or channels) with a link back to the original post and an ingress.
+Iskaribot is a Facebook Workplace -> Slack message cross-poster, which registers for webhooks and listens for posts to a particular Workplace group. When receiving such a webhook, it will resend the post to a configured Slack-channel (TODO: channels plural) with a link back to the original post and an ingress.
 
-This bot solves the age-old conundrum of how to get developers to read corporate news.
+This bot solves the age-old conundrum of how to get developers to read corporate news. 😎
+
+There are three implementations of the same functionality;
+
+- Node.js [/node]("node/README.md")
+- .NET Core [/dotnet]("dotnet/README.md")
+- Golang [/go]("go/README.md")
+
+Each platform will have the same functionality:
+
+- Respond to incoming HTTP requests. Endpoints:
+  - GET request from Workplace with 'random' token to be returned in response. Required by Workplace to validate the endpoint. Only done once, on registering the webook and endpoint.
+  - POST request from Workplace with a message posted in a Workplace group.
+- Deserialize message from Workplace. Convert from JSON data to in-memory object.
+- Fetch any attachments (images, documents) to the message. Workplace uses a Facebook CDN for attachments.
+- Formats message for sending to Slack.
+- Forwards message to Slack endpoint as a POST HTTP request.
+
+Future/planned functionality:
+
+- Support multiple source Workplace groups.
+- Support multiple destination Slack channels/servers.
+- Many-to-many relationships between Slack and Workplace groups.
+- Support Microsoft Teams as a destination.
+- Filter messages by hashtag. For instance only send messages if tagged with `#slack`.
+- Frontend admin panel.
 
 ## Prerequisites
 
+These are the prerequisites common for each platform version.
+
+#### 1. Workplace by Facebook
+
 You need an account in a corporate Facebook Workplace tenant, so if you are not the system administrator (likely not) you will need to cosy up to someone who is, and have them help you out with the proper permissions to read data from Workplace and to register the webhook.
-You then need to repeat the similar procedure on the Slack-side, so you get a Slack webhook URL to post the content to.
+
+#### 1.5 Facebook
+
+The 'personal' Facebook has the same API's as Workplace, so most likely this bot will work just as well there. This has not been the main focus for development, and has not been tested at the time of this writing.
+
+#### 2. Slack
+
+You will need to repeat the process in you Slack tenant; cosy up to the admins, if that's not you, and configure an **Incoming Webhook** so you get a URL to post the content from Workplace to.
 
 ## Development
 
-Iskaribot was built using Node 16.1.0 and NPM 7.24.0 so you should be safe if you have the same versions, others at your peril. Not really.
+- You will need Git if you want to clone this repository, or you can download the ZIP file.
 
-You will also need Git if you want to clone this repository.
+- You will need a public TLS-enabled endpoint for your localhost process, for this we have used [ngrok](https://ngrok.com/).
 
-Then you will need a public TLS-enabled endpoint for your localhost process, so why don't you give [ngrok](https://ngrok.com/) a try?
+### 1. Running Iskaribot locally
 
-### Run Iskaribot locally
+Refer to the instructions for your chosen platform:
 
-1. Clone this repository.
-1. Install dependencies by running `npm install`
-1. Install `nodemon` globally with `npm i -g nodemon`
-1. Add configuration data to the included `rename.env` file and rename the file to `.env`. Optionally, and for production deployment, the configuration can be added as environment variables.
-1. Run the bot with `npm start` which will run nodemon and listen for changes to the application...
+- Node.js [/node]("node/README.md")
+- .NET Core [/dotnet]("dotnet/README.md")
+- Golang [/go]("go/README.md")
 
-### Configure ngrok
+### 2. Configuring ngrok
 
 To get webhooks from Workplace to hit your local development environment, you need a public TLS-enabled endpoint to forward the webhook for you. Register at [ngrok](https://ngrok.com), follow the instructions there to get your local ngrok client configured.
 
@@ -33,7 +67,7 @@ Run ngrok pointing it to the same TCP port as your local Iskaribot. Default port
 
 <img src="images/ngrok_client.png" width=500>
 
-### Configure Facebook Workplace
+### 3. Configuring Facebook Workplace
 
 Using 'Integrations' in Workplace, you can configure a webhook to trigger Iskaribot whenever there is a new post in your WP group.
 
@@ -49,12 +83,14 @@ Using 'Integrations' in Workplace, you can configure a webhook to trigger Iskari
 - Verify token set to the same value as in your local `.env` file.
 - Tick 'posts' to enable the webhook to be 'triggered when a post is added, updated or deleted in a group'.
 
-### Configure Slack
+### Configuring Slack
+
 In Slack, configure a webhook. Add the webhook url to an environment variable ´SLACK_URL´.
-This URL will be used to post 
+This URL will be the endpoint used by Iskaribot to post messages to Slack.
+
 ## Deployment
 
-TODO: Dockerfile to build container image for deployment.
+TODO: Dockerfile to build container image for deployment, one for each platform.
 
 ## API documentation
 
