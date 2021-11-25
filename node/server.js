@@ -121,7 +121,7 @@ function verifyRequestSignature(req, res, buf) {
     console.error('Couldn\'t validate the signature');
   } else {
     var elements = signature.split('=');
-    var signatureHash = element[1];
+    var signatureHash = elements[1];
 
     var expectedHash = crypto.createHmac('sha1', APP_SECRET).update(buf).digest('hex');
     if (signatureHash != expectedHash) {
