@@ -58,7 +58,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install npm packages
-        working-directory: node
         uses: bahmutov/npm-install@v1
 
       - name: Build
