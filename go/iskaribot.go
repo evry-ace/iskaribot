@@ -19,6 +19,45 @@ type SlackRequestBody struct {
 	Text string `json:"text"`
 }
 
+type WorkplaceMessage struct {
+	// Example message:
+	//{ value:
+	//	{ attachments: { data: [Array] },
+	//	  created_time: '2021-11-07T11:19:01+0000',
+	//	  community: { id: '1427629113928236' },
+	//	  from: { id: '100073965725281', name: 'Thomas Qvidahl' },
+	//	  message: 'Melding med bildevedlegg.',
+	//	  permalink_url:
+	//	   'https://evrystratus.workplace.com/groups/1059917401446886/permalink/1068662927239000/',
+	//	  post_id: '1059917401446886_1068662927239000',
+	//	  target_type: 'group',
+	//	  type: 'photo',
+	//	  verb: 'add' },
+	//   field: 'posts' }
+
+	// Mapped to struct here:
+	Value []struct {
+		Attachments []struct {
+			Data string `json:"data"`
+		} `json:"attachments"`
+		CreatedTime string `json:"created_time"`
+		Community   []struct {
+			Id string `json:"id"`
+		} `json:"community"`
+		From []struct {
+			Id   string `json:"id"`
+			Name string `json:"name"`
+		} `json:""`
+		Message      string `json:"message"`
+		PermalinkUrl string `json:"permalink_url"`
+		PostId       string `json:"post_id"`
+		TargetType   string `json:"target_type"`
+		Type         string `json:"type"`
+		Verb         string `json:"verb"`
+	} `json:"value"`
+	Field string `json:"field"`
+}
+
 func HandleFacebook(resp http.ResponseWriter, request *http.Request) {
 
 	verifyToken := getEnvironment("VERIFY_TOKEN")
@@ -30,17 +69,19 @@ func HandleFacebook(resp http.ResponseWriter, request *http.Request) {
 		if token == verifyToken {
 			resp.WriteHeader(200)
 			resp.Write([]byte(values.Get("hub.challenge")))
+			log.Println("Verified token...")
 			return
 		}
 		resp.WriteHeader(400)
 		resp.Write([]byte(`Bad token`))
 		return
-	} else {
-		_, err := ioutil.ReadAll(request.Body)
+	} else if request.Method == "POST" {
+		body, err := ioutil.ReadAll(request.Body)
+		log.Println(body)
 		if err != nil {
 			log.Printf("Failed parsing body: %s", err)
 			resp.WriteHeader(400)
-			resp.Write([]byte("An error occurred"))
+			resp.Write([]byte("An error occurred."))
 			return
 		}
 
@@ -50,9 +91,6 @@ func HandleFacebook(resp http.ResponseWriter, request *http.Request) {
 func main() {
 
 	port := getEnvironment("PORT")
-	if port == "" {
-		log.Fatal("No port number entered")
-	}
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", HandleFacebook).Methods("POST", "GET")
@@ -92,7 +130,7 @@ func getEnvironment(varName string) string {
 	value, isSet := os.LookupEnv(varName)
 
 	if !isSet || value == "" {
-		log.Print("Must set environment variable " + varName)
+		log.Fatal("Must set environment variable " + varName)
 	}
 	return value
 }
