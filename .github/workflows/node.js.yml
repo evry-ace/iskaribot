@@ -32,6 +32,8 @@ jobs:
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: node
 
       - name: Format code
         working-directory: node
@@ -59,6 +61,8 @@ jobs:
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: node
 
       - name: Build
         working-directory: node
