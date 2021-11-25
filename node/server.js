@@ -1,5 +1,7 @@
+// @ts-check
+
 const
-  express = require('express')
+  express = require('express'),
 axios = require('axios');
 
 require('dotenv').config();
