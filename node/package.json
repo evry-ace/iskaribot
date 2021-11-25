@@ -8,7 +8,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "format:check": "prettier --check .",
+    "format-all-files": "prettier --write ."
   },
   "keywords": [
     "bot",
@@ -24,6 +26,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "2.0.15"
+    "nodemon": "2.0.15",
+    "prettier": "^2.4.1"
   }
 }
