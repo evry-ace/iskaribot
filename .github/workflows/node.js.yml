@@ -29,7 +29,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-        working-directory: node
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
