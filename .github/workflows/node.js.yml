@@ -58,7 +58,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Change working directory
-        run: cd node
+        run: |
+          pwd
+          cd node
 
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
