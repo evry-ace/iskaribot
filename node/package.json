@@ -22,7 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.26.0",
-    "dotenv": "^14.0.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1"
   },
   "devDependencies": {
