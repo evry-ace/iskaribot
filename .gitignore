@@ -1,3 +1,6 @@
+node_modules/
+.idea/*
 .env
-node_modules
+node-ts/src/**/*.js
+node-ts/src/**/*.js.map
 *.tsbuildinfo
