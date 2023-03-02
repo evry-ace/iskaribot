@@ -30,12 +30,12 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/', (req: Request<unknown,unknown,WorkplaceBody>, res: Response) => {
+router.post('/', async (req: Request<unknown,unknown,WorkplaceBody>, res: Response) => {
     try {
         // verifyRequestSignature({},'')
         switch (req.body.object) {
             case Topic.group: 
-                handleGroup(req.body.entry)
+                await handleGroup(req.body.entry)
                 break;
             default:
                 log.warn('Unhandled Webhook Object', req.body.object);
