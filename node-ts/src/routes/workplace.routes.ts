@@ -1,12 +1,13 @@
 ﻿import { Router, Request, Response } from "express";
 import { Logger, ILogObj } from "tslog";
+import { sanitize } from "dompurify"
 import {WorkplaceBody} from "../entities/workplaceRequest";
 import {Topic} from "../enums/workplaceEnums";
 import {handleGroup} from "../handlers/workplace.handler";
 const log: Logger<ILogObj> = new Logger();
 
 const {
-    WORKPLACE_VERIFY_TOKEN, WORKPLACE_APP_SECRET,
+    WORKPLACE_VERIFY_TOKEN,
 } = process.env
 
 const router = Router();
@@ -26,7 +27,7 @@ router.get('/', (req, res) => {
     }
     
     log.debug('Validating webhook')
-    res.status(200).send(challenge)
+    res.status(200).send(sanitize(challenge.toString()))
 });
 
 

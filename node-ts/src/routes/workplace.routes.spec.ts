@@ -8,7 +8,7 @@ describe('/', () => {
     test('Verify server', async () => {
         const mode = 'subscribe'
         const challenge = 'random_string'
-        const verify_token = process.env.VERIFY_TOKEN
+        const verify_token = process.env.WORKPLACE_VERIFY_TOKEN
         const query = '?'+[
             'hub.mode='+mode,
             'hub.challenge='+challenge,
@@ -16,7 +16,7 @@ describe('/', () => {
         ].join('&')
         
         const res = await request(app)
-            .get("/workspace"+query)
+            .get("/workplace"+query)
             .expect(200);
         
         expect(res.text).toEqual(challenge)
